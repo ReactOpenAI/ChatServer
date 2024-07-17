@@ -24,11 +24,13 @@ const getResponse = async (content) => {
     });
     return response.choices[0].message.content;
 };
-
+console.log(process.env.API_KEY)
 app.use(cors());
-
+app.get('/health-check', async (req, res) => {
+    res.status(200).send({message:'ok'})
+})
 // Define a route
-app.get('/', async (req, res) => {
+app.get('/get-response', async (req, res) => {
     const { question } = req.query;
     console.log('User has asked a question', question);
     const response = await getResponse(question);
@@ -36,6 +38,6 @@ app.get('/', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server is running on http://localhost:${port}`);
+// });

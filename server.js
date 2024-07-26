@@ -5,7 +5,7 @@ const { OpenAI } = require('openai');
 require('dotenv').config();
 
 const app = express();
-const port = 4000; // You can change this to any port you prefer
+const port = process.env.PORT || 80;
 
 const configuration = {
     apiKey: process.env.API_KEY,
@@ -37,7 +37,6 @@ app.get('/get-response', async (req, res) => {
     res.send(response);
 });
 
-// Start the server
-// app.listen(port, () => {
-//     console.log(`Server is running on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});

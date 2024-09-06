@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/c26d79bc-20d9-42e9-990a-b2eafa48007f/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ReactOpenAI",
+    "appService.deploySubpath": "."
+}

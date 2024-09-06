@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { OpenAI } = require('openai');
+let aimodelcheck = "gpt-3.5-turbo"
 
 require('dotenv').config();
 
@@ -13,13 +14,13 @@ const configuration = {
 
 const openAi = new OpenAI(configuration);
 
-const getResponse = async (content) => {
+const getResponse = async (content, model) => {
     const response = await openAi.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model,
         messages: [
             { role: 'user', content },
         ],
-        max_tokens: 100,
+        max_tokens: 3000,
         temperature: 0.5,
     });
     return response.choices[0].message.content;
@@ -31,9 +32,13 @@ app.get('/health-check', async (req, res) => {
 })
 // Define a route
 app.get('/get-response', async (req, res) => {
-    const { question } = req.query;
+    const { question, aimodelselection } = req.query;
     console.log('User has asked a question', question);
-    const response = await getResponse(question);
+    if (aimodelselection != aimodelcheck) {
+        console.log('User has changed AI Model', aimodelselection);
+        aimodelcheck = aimodelselection;
+    }
+    const response = await getResponse(question, aimodelselection);
     res.send(response);
 });
 
